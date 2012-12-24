@@ -46,7 +46,7 @@ This original code in overtone
 
 Other sound can be written like `[:freesound 1234]` `[:string 51]` 
 
-Then `(compose data)` convert data into overtone music `(play c 120)`.
+Then convert data into overtone music `(play (compose data) 120)` .
 
 ## GUI
 
