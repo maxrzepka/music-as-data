@@ -10,7 +10,7 @@ into plain clj datastructure
 This original code in overtone
 
 ```clojure
-(defn drums [nome]        
+(defn drums [nome]
     (let [beat (nome)]
         ; hi-hat pattern
         (at (nome beat) (close-hihat))
@@ -37,31 +37,36 @@ This original code in overtone
 
 ```
 
-```clojure 
+```clojure
 [[:close-hihat 0 2 3 4 6 7]
  [:open-hihat 1 5]
  [:snare 2 7/2 9/2 6 15/2]
  [:kick 0 5 7]]
 ```
 
-Other sound can be written like `[:freesound 1234]` `[:string 51]` 
+Other sound can be written like `[:freesound 1234]` `[:string 51]`
 
 Then convert data into overtone music `(play (compose data) 120)` .
 
 ## GUI
 
    - Righ-side Vertical Panel : list of all sounds available , add new one from freesound
-   - Middle panel : lines of sound each line is decompose in 8 cells : checked cell = sound 
+   - Middle panel : lines of sound each line is decompose in 8 cells : checked cell = sound
    - Play current composition with live changes
-   - Record to mp3 file 
+   - Record to mp3 file
 
 Look at http://www.chris-granger.com/2012/02/20/overtone-and-clojurescript/ to get some inspiration
+
+Look at Reactive programming :
+     - flapjax + cljs (https://github.com/alandipert/flapjax-demo.git)
+     - talks/articles from elm-lang
+     - cljs implemetation https://github.com/drcode/webfui.git
 
 ## Usage
 
 
 ## License
 
-Copyright © 2012 @maxrzepka
+Copyright © 2012 Maximilien Rzepka
 
 Distributed under the Eclipse Public License, the same as Clojure.
