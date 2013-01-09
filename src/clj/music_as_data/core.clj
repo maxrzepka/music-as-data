@@ -30,6 +30,7 @@
 ;; WARNING connect to collider server before compiling
 ;; WARNING network connection needed to launch the REPL
 
+;; (c/boot-internal-server)  / (c/kill-server)
 
 ;; bass translation from func.clj
 ;; [:string [0 51] [1/2 51] [3/2 51] [5/2 51] [4 51] [9/2 49] [5 46] [6 51] [13/2 49] [7 46] [8 51] [12 51] [25/2 51]]
@@ -46,6 +47,9 @@
     (first (drop-while #(not (< gtime %))
                        (map #(int (Math/pow 4 %)) (range 1 10))))))
 
+(defn note [n]
+  (if (number? n) n (c/note n)))
+
 (defn compose
   "Given a composition as data returns fct playing it with a given metronome
 usage (compose [[:close-hihat 0 2 3 4 6 7]
@@ -58,7 +62,7 @@ usage (compose [[:close-hihat 0 2 3 4 6 7]
             (let [beat (nome)]
               (doseq [[sound & times] data t times]
                 (if (and (sequential? t) (> (count t) 1))
-                  (c/at (nome (+ (first t) beat)) ((@sounds sound) (second t)))
+                  (c/at (nome (+ (first t) beat)) ((@sounds sound) (note (second t))))
                   (c/at (nome (+ t beat)) ((@sounds sound)))))
               (c/apply-at (nome (+ len beat)) play nome [])))))
 
