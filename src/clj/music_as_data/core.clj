@@ -1,6 +1,17 @@
 (ns music-as-data.core
   (:require [overtone.core :as c]))
 
+;; WARNING connect to collider server before compiling
+;; WARNING network connection needed to launch the REPL
+
+;; (c/boot-internal-server)  / (c/kill-server)
+(if (c/server-disconnected?)
+  (c/boot-internal-server))
+
+(defn run-server []
+  (when (c/server-connected?) (c/kill-server))
+  (c/boot-internal-server))
+
 ;; # Some Sounds
 (def close-hihat (c/sample (c/freesound-path 802)))
 (def snare (c/sample (c/freesound-path 26903)))
@@ -27,19 +38,18 @@
          :string string
          :open-hihat open-hihat}))
 
-;; WARNING connect to collider server before compiling
-;; WARNING network connection needed to launch the REPL
+(def playlist
+  {:funk
+   [[:close-hihat 0 2 3 4 6 7]
+    [:open-hihat 1 5]
+    [:snare 2 7/2 9/2 6 15/2]
+    [:kick 0 5 7]
+    [:string [0 51] [1/2 51] [3/2 51] [5/2 51] [4 51] [9/2 49] [5 46] [6 51] [13/2 49] [7 46] [8 51] [12 51] [25/2 51]]]})
 
-;; (c/boot-internal-server)  / (c/kill-server)
+;;TODO write fct to validate composition
 
-;; bass translation from func.clj
-;; [:string [0 51] [1/2 51] [3/2 51] [5/2 51] [4 51] [9/2 49] [5 46] [6 51] [13/2 49] [7 46] [8 51] [12 51] [25/2 51]]
-
-;;TODO write fct to valid composition
-;;TODO convert note C4 to fq and integrate to composition format
-
-(defn line-length
-  ""
+(defn guess-length
+  "Guess length of line of composition : 4, 8, 16..."
   [line]
   (let [times (rest line)
         gtime (apply max (map #(if (sequential? %) (first %) %) times))
@@ -57,18 +67,34 @@ usage (compose [[:close-hihat 0 2 3 4 6 7]
               [:snare 2 7/2 9/2 6 15/2]])
 "
   [data]
-  (let [len (apply max (map line-length data))]
+  (let [len (apply max (map guess-length data))]
     (fn play [nome]
             (let [beat (nome)]
               (doseq [[sound & times] data t times]
-                (if (and (sequential? t) (> (count t) 1))
+                (if (and (sequential? t) (> (count t) 1)) ;;case instrument
                   (c/at (nome (+ (first t) beat)) ((@sounds sound) (note (second t))))
                   (c/at (nome (+ t beat)) ((@sounds sound)))))
               (c/apply-at (nome (+ len beat)) play nome [])))))
 
+(defn compose1 [line]
+  (let [len (guess-length line)]
+    (fn play [nome]
+      (let [beat (nome)
+            [sound & times] line]
+        (doseq [t times]
+                (if (and (sequential? t) (> (count t) 1)) ;;case instrument
+                  (c/at (nome (+ (first t) beat)) ((@sounds sound) (note (second t))))
+                  (c/at (nome (+ t beat)) ((@sounds sound)))))
+        (c/apply-at (nome (+ len beat)) play nome [])))))
 
-(defn play-it [data]
+(defn play [data]
   (c/stop)
   ((compose data) met))
 
+(defn play1 [data]
+  (c/stop)
+  (doseq [line data]
+    ((compose1 line) met)))
+
+(def stop c/stop)
 ;; (c/stop)

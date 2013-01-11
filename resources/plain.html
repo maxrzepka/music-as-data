@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Music As Data</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="./css/bootstrap.css" rel="stylesheet">
+
+
+    <style type="text/css">
+      body {
+        padding-top: 10px;
+        padding-bottom: 40px;
+      }
+      .sidebar-nav {
+        padding: 9px 0;
+      }
+    </style>
+  </head>
+
+  <body>
+
+    <div class="container">
+     <div class="page-header">
+         <h2>Music As Data</h2>
+     </div>
+      <div class="row">
+        <div class="span2">
+          <div class="well sidebar-nav">
+            <ul id="navexamples" class="nav nav-list">
+              <li><a href="/funk">Funk</a></li>
+              <li><a href="/stop">Stop</a></li>
+              <li><a href="/">New</a></li>
+           </ul>
+          </div><!--/.well -->
+        </div>
+        <div class="span8">
+            <form method="post" id="" action="/">
+                <div id="i_error" class="well alert-error">Error here</div>
+                <label class="control-label" for="source">Composition
+                    <textarea class="input-xlarge" id="i_composition" name="composition" rows="5" cols="10">
+                    </textarea>
+                </label>
+                <button type="submit" class="btn">Play</button>
+            </form>
+            <pre clas="prettyprint" id="l_composition">[:a]</pre>
+	    </div>
+      </div><!--/row-->
+
+      <div class="row">
+          <div class="span2"></div>
+          <div class="span10">
+              <div id="i_trace" class="well alert-error">Trace here</div>
+          </div>
+      </div>
+    </div><!--/.fluid-container-->
+
+  </body>
+</html>
