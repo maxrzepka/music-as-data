@@ -48,22 +48,25 @@ Other sound can be written like `[:freesound 1234]` `[:string 51]`
 
 Then convert data into overtone music `(play (compose data) 120)` .
 
-## GUI
+## Usage
+
+To run the web app :
+
+  - `lein repl`
+  - start overtone server : `user=> (use '[overtone.core :as c]) (c/boot-internal-server))`
+  - compile music-as-data.web
+  - run server `(music-as-data.web/start port)`
+
+## TODO
 
    - Righ-side Vertical Panel : list of all sounds available , add new one from freesound
    - Middle panel : lines of sound each line is decompose in 8 cells : checked cell = sound
    - Play current composition with live changes
-   - Record to mp3 file
+   - Record sound to mp3 file.
 
-Look at http://www.chris-granger.com/2012/02/20/overtone-and-clojurescript/ to get some inspiration
+## ISSUE
 
-Look at Reactive programming :
-     - flapjax + cljs (https://github.com/alandipert/flapjax-demo.git)
-     - talks/articles from elm-lang
-     - cljs implemetation https://github.com/drcode/webfui.git
-
-## Usage
-
+   - Find way to deploy/run overtone webapp.
 
 ## License
 
