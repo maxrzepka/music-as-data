@@ -4,8 +4,8 @@
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :source-paths ["src/clj"]
-  :dependencies [[org.clojure/clojure "1.4.0"]
-                 [overtone "0.7.1"]
+  :dependencies [[org.clojure/clojure "1.5.1"]
+                 [overtone "0.8.1" :exclusions [org.clojure/clojure]]
                  [ring/ring-core "1.1.6"]
                  [ring/ring-jetty-adapter "1.1.6"]
                  [net.cgrand/moustache "1.1.0"]
